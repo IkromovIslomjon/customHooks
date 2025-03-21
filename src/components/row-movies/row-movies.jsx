@@ -1,7 +1,6 @@
 import React from 'react'
 import { Modal } from 'react-responsive-modal'
 import 'react-responsive-modal/styles.css'
-import { movies } from '../../constants'
 import MovieInfo from '../movie-info/movie-info'
 import RowMoviesItem from '../row-movies-item/row-movies-item'
 import './row-movies.scss'
@@ -10,24 +9,30 @@ import Error from '../error/error'
 import Loading from '../loader/loading'
 import { useState, useEffect } from 'react'
 import useMovieService from '../../services/movieService'
+import { useLocation } from 'react-router-dom'
 
 const RowMovies = () => {
 
 	const [open,setOpen] = useState(false);
 	const [movies, setMovies] = useState([])
 	const [movieId, setMovieId] = useState(null);
-	
-	
+	const {pathname} = useLocation();
 	const [page, setPage] = useState(2);
 
-	const {getTrendingMovie, loading ,error} = useMovieService()
+	const {getTrendingMovie, getPopularMovie,  loading ,error} = useMovieService()
 
 	useEffect(()=>{
 		getMovies()
 	},[])
 
 	const getMovies = (page)=>{	
-	getTrendingMovie(page).then((res) => setMovies(movies=>[...movies, ...res]))
+		if(pathname === '/popular'){
+			getPopularMovie(page).then((res) => setMovies(movies=>[...movies, ...res]))
+
+		}else{
+			getTrendingMovie(page).then((res) => setMovies(movies=>[...movies, ...res]))
+		}
+
 	}
 
 	const getMoreMovies = () => {
@@ -56,7 +61,7 @@ const RowMovies = () => {
 				<div className='app__rowmovie-top'>
 					<div className='app__rowmovie-top__title'>
 						<img src='/tranding.svg' alt='' />
-						<h1>Trending</h1>
+						<h1>{pathname === '/popular' ? "Popular" : "Trending"}</h1>
 					</div>
 					<div className='hr' />
 					<a href='#'>See more</a>

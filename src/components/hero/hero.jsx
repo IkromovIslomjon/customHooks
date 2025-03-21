@@ -5,13 +5,15 @@ import Error from '../error/error'
 import { useState, useEffect } from 'react'
 import { use } from 'react'
 import useMovieService from '../../services/movieService'
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
 
 	const [movie, setMovie] = useState({});
 
+
 	
-	const {getPopularMovie, error , loading} = useMovieService()
+	const {getRandomMovie, error , loading} = useMovieService()
 
 	useEffect(()=>{
 		getFamousMovies();
@@ -19,7 +21,7 @@ const Hero = () => {
 
 
 	const getFamousMovies = () =>{
-		getPopularMovie().then((res)=> setMovie(res))
+		getRandomMovie().then((res)=> setMovie(res))
 		
 	}
 	
@@ -40,7 +42,7 @@ const Hero = () => {
 						sequi odit doloremque velit saepe autem facilis! Laudantium
 						consequatur accusantium mollitia.
 					</p>
-					<button className='btn btn__primary'>DETAILS</button>
+					
 				</div>
 				<div className='app__hero-moive'>
 
@@ -58,6 +60,7 @@ const Hero = () => {
 export default Hero
 
 const Content = ({movie, getPopularMovie})=>{
+	const navigate = useNavigate();
 	return (
 		<>
 		<img src={movie.image} alt='img' />
@@ -69,7 +72,7 @@ const Content = ({movie, getPopularMovie})=>{
 						</p>
 						<div>
 							<button className='btn btn__secondary' onClick={getPopularMovie}>RANDOM MOVIE</button>
-							<button className='btn btn__primary'>DETAILS</button>
+							<button className='btn btn__primary' onClick={()=> navigate(`/movie/${movie.id}`)}>DETAILS</button>
 						</div>
 					</div>
 		

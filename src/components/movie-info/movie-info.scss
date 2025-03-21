@@ -17,5 +17,14 @@
 		p {
 			opacity: 0.5;
 		}
+		.btn{
+			background-color: black;
+			color: white;
+		border-color: white;
+		&:hover{
+			color: gray;
+			border-color: red;
+		}
+		}
 	}
 }

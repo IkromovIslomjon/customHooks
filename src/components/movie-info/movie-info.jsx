@@ -5,6 +5,7 @@ import Loading from '../loader/loading'
 import Error from '../error/error'
 import { useState, useEffect } from 'react'
 import useMovieService from '../../services/movieService'
+import { useNavigate } from "react-router-dom";
 
 const MovieInfo = ({movieId}) =>{
 
@@ -43,6 +44,7 @@ const MovieInfo = ({movieId}) =>{
 export default MovieInfo
 
 const Content = ({movie})=>{
+	const navigate = useNavigate();
 	return(
 		<>
 		<img src={movie.image} alt='movie' />
@@ -51,6 +53,12 @@ const Content = ({movie})=>{
 					<p>
 					{movie.description}
 					</p>
+					<button className='btn'
+					onClick={()=>navigate(`/movie/${movie.id}`)}
+					
+					>
+					Details
+					</button>
 				</div>
 		</>
 	)

@@ -7,10 +7,10 @@ const useMovieService = ()=> {
     const {request, error, loading , clearError} = useHttp();
 
 
- const  getPopularMovie =  async() =>{
-    const res= await request(`https://api.themoviedb.org/3/movie/popular?language=en-US&page=1&api_key=d741af784b64aec7213f9cedda972c16` )
-    const movie = res.results[Math.floor(Math.random() * res.results.length)];
-    return transormMovie(movie);
+ const  getPopularMovie =  async(page = _apiPage) =>{
+    const res = await request(`https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}&api_key=d741af784b64aec7213f9cedda972c16` )
+    const movies = res.results;
+    return movies && movies.map((movie)=> transormMovie(movie))
   }
 
  const getTrendingMovie =  async(page = _apiPage) =>{
@@ -19,10 +19,17 @@ const useMovieService = ()=> {
     return movies && movies.map((movie)=> transormMovie(movie))
   
   }
+  const getRandomMovie = async ()=>{
+    const res = await getPopularMovie()
+    const movie = res[Math.floor(Math.random() * 20)];
+    return movie
+
+  }
 
   const getDetailedMovie = async (id) => {
     const res = await request(`https://api.themoviedb.org/3/movie/${id}?language=en-US&api_key=d741af784b64aec7213f9cedda972c16`)
     return transormMovie(res)
+    
 
   }
 
@@ -37,7 +44,7 @@ const useMovieService = ()=> {
     }
   }
 
-  return {getTrendingMovie, getDetailedMovie, getPopularMovie, loading, error, clearError}
+  return {getTrendingMovie, getDetailedMovie, getPopularMovie, getRandomMovie, loading, error, clearError}
 
 
 

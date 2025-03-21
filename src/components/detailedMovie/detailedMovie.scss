@@ -1,0 +1,18 @@
+.detailedmovie{
+    display: grid;
+    grid-template-columns: 30% 40%;
+    gap: 50px;
+    align-items: center;
+
+    &__img img{
+        width: 100%;
+        margin-top: 30px;
+        object-fit: cover;
+    }
+
+    &__descr{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+}

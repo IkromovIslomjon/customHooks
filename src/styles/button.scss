@@ -32,4 +32,13 @@
 			border-color: rgba(255, 255, 255, 0.1);
 		}
 	}
+	&__dark{
+		background-color: black;
+		border-color: white;
+		&:hover{
+			color: #fff;
+			background-color: transparent;
+			border-color: red;
+		}
+	}
 }
